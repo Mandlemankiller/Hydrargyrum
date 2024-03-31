@@ -1,0 +1,13 @@
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea/jarRepositories.xml
+.idea/discord.xml
+.idea/compiler.xml
+.idea/libraries/
+.idea/workspace.xml
+*.iws
+*.iml
+*.ipr

@@ -1,0 +1,4 @@
+name: Hydrargyrum
+version: '${project.version}'
+main: cz.jeme.programu.hydrargyrum.Hydrargyrum
+api-version: '1.20'
