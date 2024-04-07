@@ -1,5 +1,7 @@
 package cz.jeme.programu.hydrargyrum.persistence;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.key.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -10,10 +12,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public interface DataStorage<P, C> {
-    static <P, C> @NotNull DataStorage<P, C> storage(final @NotNull NamespacedKey key,
+public interface DataStorage<P, C> extends Keyed {
+    static <P, C> @NotNull DataStorage<P, C> storage(final @NotNull Key key,
                                                      final @NotNull PersistentDataType<P, C> type) {
-        return new DataStorageImpl<>(key, type);
+        final NamespacedKey namespacedKey = key instanceof NamespacedKey
+                ? (NamespacedKey) key
+                : new NamespacedKey(key.namespace(), key.value());
+        return new DataStorageImpl<>(namespacedKey, type);
     }
 
     static @NotNull DataStorage<Byte, Byte> byteStorage(final @NotNull NamespacedKey key) {
@@ -64,10 +69,8 @@ public interface DataStorage<P, C> {
         return DataStorage.storage(key, PersistentDataType.TAG_CONTAINER);
     }
 
-
-    @NotNull NamespacedKey key();
-
-    @NotNull PersistentDataType<P, C> type();
+    @NotNull
+    PersistentDataType<P, C> type();
 
     boolean has(final @Nullable PersistentDataContainer container);
 
@@ -75,11 +78,14 @@ public interface DataStorage<P, C> {
 
     boolean has(final @Nullable ItemStack item);
 
-    @NotNull Optional<C> read(final @Nullable PersistentDataContainer container);
+    @NotNull
+    Optional<C> read(final @Nullable PersistentDataContainer container);
 
-    @NotNull Optional<C> read(final @Nullable PersistentDataHolder holder);
+    @NotNull
+    Optional<C> read(final @Nullable PersistentDataHolder holder);
 
-    @NotNull Optional<C> read(final @Nullable ItemStack item);
+    @NotNull
+    Optional<C> read(final @Nullable ItemStack item);
 
     void write(final @NotNull PersistentDataContainer container, final @NotNull C value);
 
@@ -87,9 +93,12 @@ public interface DataStorage<P, C> {
 
     void write(final @NotNull ItemStack item, final @NotNull C value);
 
-    @NotNull Optional<C> delete(final @NotNull PersistentDataContainer container);
+    @NotNull
+    Optional<C> delete(final @NotNull PersistentDataContainer container);
 
-    @NotNull Optional<C> delete(final @NotNull PersistentDataHolder holder);
+    @NotNull
+    Optional<C> delete(final @NotNull PersistentDataHolder holder);
 
-    @NotNull Optional<C> delete(final @NotNull ItemStack item);
+    @NotNull
+    Optional<C> delete(final @NotNull ItemStack item);
 }

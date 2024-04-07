@@ -2,7 +2,7 @@ package cz.jeme.programu.hydrargyrum.element;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
-import org.bukkit.NamespacedKey;
+import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
@@ -66,7 +66,7 @@ enum ElementManagerImpl implements ElementManager {
     }
 
     @Override
-    public @NotNull Optional<HydraElement> elementByKey(final @NotNull NamespacedKey key) {
+    public @NotNull Optional<HydraElement> elementByKey(final @NotNull Key key) {
         return elementByKey(key.asString());
     }
 

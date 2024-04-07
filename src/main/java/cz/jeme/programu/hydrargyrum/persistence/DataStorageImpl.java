@@ -62,7 +62,7 @@ record DataStorageImpl<P, C>(
 
     @Override
     public @NotNull Optional<C> delete(final @NotNull PersistentDataContainer container) {
-        Optional<C> value = read(container);
+        final Optional<C> value = read(container);
         if (value.isPresent()) container.remove(key);
         return value;
     }
@@ -74,8 +74,8 @@ record DataStorageImpl<P, C>(
 
     @Override
     public @NotNull Optional<C> delete(final @NotNull ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        Optional<C> value = delete(meta);
+        final ItemMeta meta = item.getItemMeta();
+        final Optional<C> value = delete(meta);
         if (value.isPresent()) item.setItemMeta(meta);
         return value;
     }

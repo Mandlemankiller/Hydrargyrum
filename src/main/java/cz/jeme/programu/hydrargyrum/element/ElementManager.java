@@ -1,6 +1,6 @@
 package cz.jeme.programu.hydrargyrum.element;
 
-import org.bukkit.NamespacedKey;
+import net.kyori.adventure.key.Key;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,14 +23,11 @@ public interface ElementManager {
         registerElements(pluginClass, pluginClass.getPackageName());
     }
 
-    default void registerElements(final @NotNull Class<? extends HydraElement>... classes) {
-        for (Class<? extends HydraElement> clazz : classes) registerElement(clazz);
-    }
-
     <T extends HydraElement> @NotNull Optional<T> elementByClass(final @NotNull Class<T> clazz);
 
+    @NotNull
+    Optional<HydraElement> elementByKey(final @NotNull Key key);
 
-    @NotNull Optional<HydraElement> elementByKey(final @NotNull NamespacedKey key);
-
-    @NotNull Optional<HydraElement> elementByKey(final @NotNull String key);
+    @NotNull
+    Optional<HydraElement> elementByKey(final @NotNull String key);
 }
